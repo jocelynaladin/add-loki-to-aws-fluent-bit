@@ -1,0 +1,15 @@
+[OUTPUT]
+    Name cloudwatch
+    Match   *
+    region us-east-1
+    log_group_name fluentbit-test-awslogs-trellis-serviceapi-app
+    log_stream_prefix from-fluent-bit-test-trellis
+
+[OUTPUT]
+    Name grafana-loki
+    Match *
+    Url http://10.105.60.100:3100/loki/api/v1/push
+    Labels {job="firelens"}
+    LabelKeys $container_name,$ecs_task_definition,$source,$ecs_cluster
+    LineFormat key_value
+    RemoveKeys container_id,ecs_task_arn
